@@ -27,20 +27,24 @@ const UserTable = async ({ sortOrder }: Props) => {
         New Users
       </Link>
       <table border={1}>
-        <tr>
-          <th>
-            <Link href="/users?sortOrder=name">Name</Link>
-          </th>
-          <th>
-            <Link href="/users?sortOrder=email">Email</Link>
-          </th>
-        </tr>
-        {sortedUser.map((user) => (
-          <tr key={user.id}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
+        <thead>
+          <tr>
+            <th>
+              <Link href="/users?sortOrder=name">Name</Link>
+            </th>
+            <th>
+              <Link href="/users?sortOrder=email">Email</Link>
+            </th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {sortedUser.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

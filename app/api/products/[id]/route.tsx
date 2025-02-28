@@ -6,13 +6,13 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const user = await prisma.user.findUnique({
+  const products = await prisma.product.findUnique({
     where: { id: Number(params.id) },
   });
 
-  if (!user) return NextResponse.json("User Not Found", { status: 404 });
+  if (!products) return NextResponse.json("User Not Found", { status: 404 });
 
-  return NextResponse.json(user);
+  return NextResponse.json(products);
 }
 
 export async function PUT(
@@ -22,11 +22,11 @@ export async function PUT(
   try {
     const body = await request.json();
 
-    const user = await prisma.user.findUnique({
+    const products = await prisma.product.findUnique({
       where: { id: Number(params.id) },
     });
 
-    if (!user) {
+    if (!products) {
       return NextResponse.json({ message: "User Not Found" }, { status: 404 });
     }
 
@@ -35,15 +35,15 @@ export async function PUT(
       return NextResponse.json(validate.error.errors, { status: 400 });
     }
 
-    const updatedUser = await prisma.user.update({
+    const updateProduct = await prisma.product.update({
       where: { id: Number(params.id) },
       data: {
         name: body.name,
-        email: body.email,
+        price: body.price,
       },
     });
 
-    return NextResponse.json(updatedUser);
+    return NextResponse.json(updateProduct);
   } catch (error) {
     return NextResponse.json(
       { message: "Internal Server Error", error },
@@ -56,12 +56,12 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: number } }
 ) {
-  const user = await prisma.user.findUnique({
+  const products = await prisma.product.findUnique({
     where: { id: Number(params.id) },
   });
-  if (!user) return NextResponse.json("User Not Found", { status: 404 });
+  if (!products) return NextResponse.json("User Not Found", { status: 404 });
 
-  await prisma.user.delete({
+  await prisma.product.delete({
     where: { id: Number(params.id) },
   });
 
